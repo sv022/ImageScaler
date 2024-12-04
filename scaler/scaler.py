@@ -13,16 +13,15 @@ class Scaler:
 
         if not os.path.exists(outDir):
             os.makedirs(outDir)
-
-        with open("config.json") as json_file:
-            config = json.load(json_file)
-        self.labelMap = config["classes"]
         
 
-    def load_labels(self, labels_path: str):
+    def load_labels(self, labels_path: str, classes: list):
         with open(labels_path) as json_file:
             labels = json.load(json_file)
+
         self.labels = labels
+        self.labelMap = classes
+
     
     def process_image(self, image_path : str, label: bool):
         image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -51,8 +50,16 @@ class Scaler:
         
         if not self.labels and label:
             raise ValueError("Can not label images - labels not set. Try using load_labels() first.")
+        
+        fileNames = []
 
         for file_name in os.listdir(input_folder):
             if file_name.lower().endswith(".jpg"):
                 image_path = os.path.join(input_folder, file_name)
                 self.process_image(image_path, label)
+                fileNames.append(file_name)
+
+        fileNames = sorted((f.strip('.jpg') for f in fileNames), key=lambda x: int(x))
+        
+        with open(f'{self.outDir}/files.txt', 'w') as f:
+            f.write('\n'.join(fileNames))
