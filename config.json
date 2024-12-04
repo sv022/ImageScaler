@@ -1,5 +1,6 @@
 {
-    "datasetPath": "testimg",
-    "labelsPath": "testimg/labels.json",
-    "classes": ["test1", "test2", "test3"]
+    "dimesions": [640, 480],
+    "labelsPath": "image/labels.json",
+    "datasetPath": "image",
+    "classes": [0, 1]
 }
