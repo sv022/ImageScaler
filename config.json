@@ -1,5 +1,0 @@
-{
-    "datasetPath": "testimg",
-    "labelsPath": "testimg/labels.json",
-    "classes": ["test1", "test2", "test3"]
-}
